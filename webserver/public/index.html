@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<title>ROV</title>
+<style>
+#servoProgress {
+width: 400px;
+  background-color: #aaaaaa;
+}
+
+#servoBar {
+  width: 50%;
+  height: 10px;
+  background-color: #1e65d8;
+}
+
+#speedProgress {
+width: 400px;
+  background-color: #aaaaaa;
+}
+
+#speedBar {
+  width: 100%;
+  height: 10px;
+  background-color: #1e65d8;
+}
+</style>
+
+
+<body onload = "init()">
+<p id="demo"></p>
+
+<p1>Motor speed:</p1>
+
+<div id="speedProgress">
+  <div id="speedBar"></div>
+</div>
+
+
+<br>
+<p1>Camera angle:</p1>
+
+<div id="servoProgress">
+  <div id="servoBar"></div>
+</div>
+
+
+<br>
+<p><img style="padding: 0 15px; float: left;" src= "http://169.254.141.168:8082/?action=stream" width="640" height="480"></p>
+<p style="margin-top: 20px; margin-left: 20px"></p>
+<p>Controls:<br>w - forwards<br>s - backwards<br>a - strafe left<br>d - strafe right<br>q - turn left<br>e - turn right<br>r - tilt up<br>f - tilt down</p>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
+<meta charset="UTF-16">
+<script type="text/javascript">
+var socket = io();
+//var keysDown = new Array(256);
+var output;
+function init() {
+  output = document.getElementById("demo");
+  document.onkeydown = updateKeys;
+}
+
+updateKeys = function(e){
+  currentKey = String.fromCharCode(e.keyCode);
+  socket.emit("demo", currentKey.toLowerCase());
+}
+
+socket.on("power value", function(power) {
+  document.getElementById("speedBar").style.width = power + '%';
+});
+
+socket.on("servo value", function(servo) {
+  document.getElementById("servoBar").style.width = servo + '%';
+});
+</script>
+
+</body>
+</html>

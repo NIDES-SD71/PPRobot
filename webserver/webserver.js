@@ -32,10 +32,6 @@ io.sockets.on('connection', function (socket) { // WebSocket Connection
   });
 
   parser.on('data', function(data) {
-    if (!isNaN(data.slice(1)) && data.startsWith('p')) {
-      var speedWidth = ((data.slice(1) / 255) * 100);
-      socket.emit("power value", speedWidth.toFixed(1));
-    }
     if (!isNaN(data.slice(1)) && data.startsWith('s')) {
       var servoWidth = (data.slice(1) / 180) * 100;
       socket.emit("servo value", servoWidth.toFixed(1));

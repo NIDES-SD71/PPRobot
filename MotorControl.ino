@@ -21,7 +21,6 @@ int servoPos;
 #define BACKRIGHT_IN2 12
 
 int power = 255;
-char powerPrefix = 'p';
 
 int input = 0;
 void setup() {
@@ -165,7 +164,7 @@ void loop() {
         servoPos = servo.read() + 1;
         if (servoPos <= SERVOMAX) {
           servo.write(servoPos);
-          Serial.print('s');
+          Serial.print(servoPrefix);
           Serial.println(servoPos);
         }
         break;
@@ -174,7 +173,7 @@ void loop() {
         servoPos = servo.read() - 1;
         if (servoPos >= SERVOMIN) {
           servo.write(servoPos);
-          Serial.print('s');
+          Serial.print(servoPrefix);
           Serial.println(servoPos);
         }
         break;
